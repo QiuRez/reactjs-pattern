@@ -4,19 +4,28 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 module.exports = {
+	entry: './src/index.js',
+	devtool: 'inline-source-map',
+	output: {
+		filename: 'bundle.js',
+		path: path.resolve(__dirname, 'dist'),
+		publicPath: '/',
+
+	},
 
 	resolve: {
 		alias: {
 			assets: path.resolve(__dirname, 'public')
 		}
 	},
+	
 	module: {
 		rules: [
 			{
 				test: /\.scss$/,
 				use: [
 					{
-						loader: MiniCssExtractPlugin.loader
+						loader: 'style-loader'
 					},
 					{
 						loader: 'css-loader',
@@ -28,15 +37,12 @@ module.exports = {
 						}
 					},
 					{
-						loader: 'postcss-loader',
-						options: {
-							sourceMap: true,
-						}
-					},
-					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: true
+							sourceMap: true,
+							sassOptions: {
+								outputStyle: 'compressed'
+							}
 						}
 					}
 				]
@@ -52,16 +58,19 @@ module.exports = {
 						]}
 					}
 			},
-		],
-	},
+			{
+				test: /\.(png|svg|jpg|jpeg|gif)$/i,
+				type: 'asset/resource',
+			},
+			],
+		},
 	plugins: [
-		new MiniCssExtractPlugin(),
 		new HtmlWebpackPlugin({
 			template: './public/index.html'
 		}),
 	],
 	devServer: {
-
+		historyApiFallback: true,
 	},
 	performance: {
 		hints: false,

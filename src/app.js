@@ -1,9 +1,15 @@
 import React from "react";
-import { Route, Routes } from 'react-router-dom';
+import { Route, Link, Routes, Navigate } from 'react-router-dom';
 import './style.scss';
 
 function App() {
-	return 
+	return (
+
+		<Routes>
+			
+		</Routes>
+
+	)
 }
 
-export default App;
+export default App
